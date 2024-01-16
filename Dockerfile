@@ -1,14 +1,22 @@
-# docker file for building Go application
-FROM ubuntu:latest
-
-# Install dependencies
-RUN sudo apt install -y git go wget
-
-COPY . /app
+FROM golang:1.21 as builder
 
 WORKDIR /app
 
-# Build the application
-RUN go build -o main .
+COPY go.mod go.sum ./
 
-CMD [ "main" ]
+RUN go mod download
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o /app/main
+
+# Path: Dockerfile
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /root/
+
+COPY --from=builder /app/main .
+
+CMD ["./main"]
