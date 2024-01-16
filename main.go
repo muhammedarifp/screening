@@ -11,6 +11,8 @@ func init() {
 	if err != nil {
 		log.Fatalf("Error connecting to database: %v", err)
 	}
+	db.SetMaxOpenConns(20)
+	db.SetMaxIdleConns(10)
 	DB = db
 }
 

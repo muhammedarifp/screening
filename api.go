@@ -21,6 +21,8 @@ func setupJsonApi() {
 		email := r.FormValue("email")
 		query := "INSERT INTO users (name, email) VALUES (?,?)"
 
+		defer DB.Close()
+
 		// check params is not empty
 		if name == "" || email == "" {
 			HandleApiError(w, errors.New("name or email is empty"), "email and password is required", http.StatusBadGateway)
