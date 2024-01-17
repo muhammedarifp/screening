@@ -1,4 +1,4 @@
-package main
+package helpers
 
 import (
 	"log"
@@ -9,5 +9,5 @@ import (
 func HandleApiError(w http.ResponseWriter, err error, msg string, code int) {
 	log.Printf("Error : %v", err)
 	w.WriteHeader(code)
-	w.Write([]byte(msg + err.Error()))
+	w.Write([]byte(msg + ". " + err.Error()))
 }

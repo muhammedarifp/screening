@@ -1,4 +1,4 @@
-package main
+package db
 
 import (
 	"database/sql"
@@ -7,7 +7,7 @@ import (
 )
 
 // createConnection creates a connection to mysql database
-func createConnection() (*sql.DB, error) {
+func CreateConnection() (*sql.DB, error) {
 	db, err := sql.Open("mysql", "root:my-secret-pw@tcp(localhost:3306)/test")
 	if err != nil {
 		return nil, err
